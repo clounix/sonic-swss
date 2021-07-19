@@ -1420,10 +1420,15 @@ bool AclTable::create()
         attr.value.booldata = true;
         table_attrs.push_back(attr);
 
-        attr.id = SAI_ACL_TABLE_ATTR_FIELD_IN_PORTS;
-        attr.value.booldata = true;
-        table_attrs.push_back(attr);
-
+        //If platform is Nephos, skip SAI_ACL_TABLE_ATTR_FIELD_IN_PORTS
+        string platform = getenv("platform") ? getenv("platform") : "";
+        if (platform != NPS_PLATFORM_SUBSTRING)
+        {
+            attr.id = SAI_ACL_TABLE_ATTR_FIELD_IN_PORTS;
+            attr.value.booldata = true;
+            table_attrs.push_back(attr);
+        }
+        
         // If the switch supports v6 and requires one single table
         if (m_pAclOrch->m_mirrorTableCapabilities[ACL_TABLE_MIRRORV6] &&
                 m_pAclOrch->m_isCombinedMirrorV6Table)
