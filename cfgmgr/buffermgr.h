@@ -13,6 +13,19 @@ namespace swss {
 #define INGRESS_LOSSLESS_PG_POOL_NAME "ingress_lossless_pool"
 #define LOSSLESS_PGS "3-4"
 
+/**
+ * The buffer profile threshold mode can replace the mode define in buffer pool.
+ * The threashold in pg_profile_lookup.ini may want to using static mode.
+ * If the value be treate as dynamic mode will got problem.
+ * Here check the threshold value to determin the mode.
+ * Dynamic th normally will between -7 ~ 3, so here using -10 ~ 10 to checkit.
+ * May be the better solution is to add mode to the pg_profile_lookup.ini
+ * Here define the range to check
+ */
+
+#define BUFFER_POOL_DYNAMIC_THRESHOLD_CHECK_MIN -10
+#define BUFFER_POOL_DYNAMIC_THRESHOLD_CHECK_MAX 10
+
 typedef struct{
     std::string size;
     std::string xon;

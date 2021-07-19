@@ -175,6 +175,28 @@ task_process_status BufferMgr::doPortTableUpdateTask(string port, string speed, 
             return task_process_status::task_need_retry;
         }
 
+        /**
+         * The buffer profile threshold mode can replace the mode define in buffer pool.
+         * The threashold in pg_profile_lookup.ini may want to using static mode.
+         * If the value be treate as dynamic mode will got problem.
+         * Here check the threshold value to determin the mode.
+         * Dynamic th normally will between -7 ~ 3, so here using -10 ~ 10 to checkit.
+         * May be the better solution is to add mode to the pg_profile_lookup.ini
+         */
+        int64_t threshold_value = stoll(m_pgProfileLookup[speed][cable].threshold);
+        if ((threshold_value < BUFFER_POOL_DYNAMIC_THRESHOLD_CHECK_MIN) ||
+            (threshold_value > BUFFER_POOL_DYNAMIC_THRESHOLD_CHECK_MAX)){ //static
+            if (mode != "static"){
+                SWSS_LOG_INFO("The threshold value should for static mode. Modify the mode to static.");
+                mode = "static";
+            }
+        }else{ //Dynamic
+            if (mode != "dynamic"){
+                SWSS_LOG_INFO("The threshold value should for dynamic mode. Modify the mode to dynamic.");
+                mode = "dynamic";
+            }
+        }
+
         // profile threshold field name
         mode += "_th";
         string pg_pool_reference = string(CFG_BUFFER_POOL_TABLE_NAME) +
