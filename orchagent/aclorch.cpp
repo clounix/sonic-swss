@@ -1422,7 +1422,8 @@ bool AclTable::create()
 
         //If platform is Nephos, skip SAI_ACL_TABLE_ATTR_FIELD_IN_PORTS
         string platform = getenv("platform") ? getenv("platform") : "";
-        if (platform != NPS_PLATFORM_SUBSTRING)
+        if ((platform != NPS_PLATFORM_SUBSTRING) || 
+			(platform != CLX_PLATFORM_SUBSTRING))
         {
             attr.id = SAI_ACL_TABLE_ATTR_FIELD_IN_PORTS;
             attr.value.booldata = true;
@@ -2137,6 +2138,7 @@ void AclOrch::init(vector<TableConnector>& connectors, PortsOrch *portOrch, Mirr
             platform == MLNX_PLATFORM_SUBSTRING ||
             platform == BFN_PLATFORM_SUBSTRING  ||
             platform == INVM_PLATFORM_SUBSTRING ||
+            platform == CLX_PLATFORM_SUBSTRING ||
             platform == NPS_PLATFORM_SUBSTRING)
     {
         m_mirrorTableCapabilities =
@@ -2163,6 +2165,7 @@ void AclOrch::init(vector<TableConnector>& connectors, PortsOrch *portOrch, Mirr
     // In Broadcom platform, V4 and V6 rules are stored in the same table
     if (platform == BRCM_PLATFORM_SUBSTRING ||
         platform == NPS_PLATFORM_SUBSTRING  ||
+        platform == CLX_PLATFORM_SUBSTRING  ||
         platform == BFN_PLATFORM_SUBSTRING  ||
         platform == INVM_PLATFORM_SUBSTRING) {
         m_isCombinedMirrorV6Table = true;
