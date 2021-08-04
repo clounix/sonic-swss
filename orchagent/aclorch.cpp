@@ -1422,7 +1422,7 @@ bool AclTable::create()
 
         //If platform is Nephos, skip SAI_ACL_TABLE_ATTR_FIELD_IN_PORTS
         string platform = getenv("platform") ? getenv("platform") : "";
-        if ((platform != NPS_PLATFORM_SUBSTRING) || 
+        if ((platform != NPS_PLATFORM_SUBSTRING) && 
 			(platform != CLX_PLATFORM_SUBSTRING))
         {
             attr.id = SAI_ACL_TABLE_ATTR_FIELD_IN_PORTS;
