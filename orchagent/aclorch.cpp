@@ -3084,6 +3084,7 @@ void AclOrch::init(vector<TableConnector>& connectors, PortsOrch *portOrch, Mirr
             platform == INVM_PLATFORM_SUBSTRING ||
             platform == NPS_PLATFORM_SUBSTRING ||
             platform == XS_PLATFORM_SUBSTRING ||
+            platform == CLX_PLATFORM_SUBSTRING ||
             platform == VS_PLATFORM_SUBSTRING)
     {
         m_mirrorTableCapabilities =
@@ -3138,6 +3139,7 @@ void AclOrch::init(vector<TableConnector>& connectors, PortsOrch *portOrch, Mirr
         platform == CISCO_8000_PLATFORM_SUBSTRING ||
         platform == MRVL_PLATFORM_SUBSTRING ||
         platform == XS_PLATFORM_SUBSTRING ||
+        platform == CLX_PLATFORM_SUBSTRING ||
         (platform == BRCM_PLATFORM_SUBSTRING && sub_platform == BRCM_DNX_PLATFORM_SUBSTRING))
     {
         m_isCombinedMirrorV6Table = false;
